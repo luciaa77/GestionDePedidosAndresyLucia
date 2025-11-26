@@ -6,31 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "personas")
+@Table(name = "persona")
 public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private String nombreCompleto;
+    private String nombre;
 
     @Column(unique = true)
     private String email;
 
     private LocalDate fechaRegistro;
 
-    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private InfoFiscal infoFiscal;
 
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
     private List<Compra> compras = new ArrayList<>();
 
     // GETTERS & SETTERS
-    public Long getId() { return id; }
 
-    public String getNombreCompleto() { return nombreCompleto; }
-    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+    public Integer getId() { return id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -39,11 +40,10 @@ public class Persona {
     public void setFechaRegistro(LocalDate fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
     public InfoFiscal getInfoFiscal() { return infoFiscal; }
-    public void setInfoFiscal(InfoFiscal infoFiscal) { 
+    public void setInfoFiscal(InfoFiscal infoFiscal) {
         this.infoFiscal = infoFiscal;
-        if(infoFiscal != null) infoFiscal.setPersona(this);
+        infoFiscal.setPersona(this);
     }
 
     public List<Compra> getCompras() { return compras; }
-    public void setCompras(List<Compra> compras) { this.compras = compras; }
 }

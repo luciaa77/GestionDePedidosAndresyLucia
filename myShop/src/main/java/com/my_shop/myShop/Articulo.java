@@ -5,23 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "articulos")
+@Table(name = "articulo")
 public class Articulo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String nombre;
     private String descripcion;
-    private double precioCatalogo;
-    private int stock;
+    private Double precio;
+    private Integer stock;
 
     @OneToMany(mappedBy = "articulo", fetch = FetchType.LAZY)
-    private List<LineaCompra> lineas = new ArrayList<>();
+    private List<DetalleCompra> detalles = new ArrayList<>();
 
     // GETTERS & SETTERS
-    public Long getId() { return id; }
+
+    public Integer getId() { return id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -29,12 +30,9 @@ public class Articulo {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public double getPrecioCatalogo() { return precioCatalogo; }
-    public void setPrecioCatalogo(double precioCatalogo) { this.precioCatalogo = precioCatalogo; }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 
-    public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
-
-    public List<LineaCompra> getLineas() { return lineas; }
-    public void setLineas(List<LineaCompra> lineas) { this.lineas = lineas; }
+    public Integer getStock() { return stock; }
+    public void setStock(Integer stock) { this.stock = stock; }
 }

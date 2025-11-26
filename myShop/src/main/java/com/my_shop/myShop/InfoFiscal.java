@@ -7,21 +7,23 @@ import jakarta.persistence.*;
 public class InfoFiscal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "persona_id")
+    private Integer id;
 
     private String nifCif;
     private String calle;
     private String ciudad;
-    private String cp;
+    private String codigoPostal;
     private String telefono;
 
     @OneToOne
-    @JoinColumn(name = "persona_id", unique = true)
+    @MapsId
+    @JoinColumn(name = "persona_id")
     private Persona persona;
 
     // GETTERS & SETTERS
-    public Long getId() { return id; }
+
+    public Integer getId() { return id; }
 
     public String getNifCif() { return nifCif; }
     public void setNifCif(String nifCif) { this.nifCif = nifCif; }
@@ -32,8 +34,8 @@ public class InfoFiscal {
     public String getCiudad() { return ciudad; }
     public void setCiudad(String ciudad) { this.ciudad = ciudad; }
 
-    public String getCp() { return cp; }
-    public void setCp(String cp) { this.cp = cp; }
+    public String getCodigoPostal() { return codigoPostal; }
+    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
 
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }

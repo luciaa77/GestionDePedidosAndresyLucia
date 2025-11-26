@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="my_eshopPU" transaction-type="RESOURCE_LOCAL">
+
+        <!-- PROVEEDOR -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- ENTIDADES -->
+        <class>com.my_shop.myShop.Persona</class>
+        <class>com.my_shop.myShop.InfoFiscal</class>
+        <class>com.my_shop.myShop.Articulo</class>
+        <class>com.my_shop.myShop.Compra</class>
+        <class>com.my_shop.myShop.DetalleCompra</class>
+        <class>com.my_shop.myShop.DetalleCompraId</class>
+
+        <properties>
+
+            <!-- CONEXIÓN -->
+            <property name="jakarta.persistence.jdbc.url" 
+                      value="jdbc:mariadb://localhost:3307/my_eshop"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="Abcd1234"/>
+            <property name="jakarta.persistence.jdbc.driver" 
+                      value="org.mariadb.jdbc.Driver"/>
+
+            <!-- GESTIÓN DE TABLAS -->
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
+            <!-- DIALECTO -->
+            <property name="hibernate.dialect" 
+                      value="org.hibernate.dialect.MariaDBDialect"/>
+
+            <!-- LOG -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+</persistence>
