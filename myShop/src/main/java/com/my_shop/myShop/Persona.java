@@ -2,36 +2,41 @@ package com.my_shop.myShop;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "persona")
 public class Persona {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "nifcif", length = 10)
+    private String nifcif;
 
+    @Column(nullable = false)
     private String nombre;
 
-    @Column(unique = true)
+    private String telefono;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(name = "fecha_registro", nullable = false)
     private LocalDate fechaRegistro;
 
+    // Relación 1:1 con info_fiscal
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private InfoFiscal infoFiscal;
 
-    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
-    private List<Compra> compras = new ArrayList<>();
+    public Persona() {}
 
-    // GETTERS & SETTERS
-
-    public Integer getId() { return id; }
+    // GETTERS Y SETTERS
+    public String getNifcif() { return nifcif; }
+    public void setNifcif(String nifcif) { this.nifcif = nifcif; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -42,8 +47,5 @@ public class Persona {
     public InfoFiscal getInfoFiscal() { return infoFiscal; }
     public void setInfoFiscal(InfoFiscal infoFiscal) {
         this.infoFiscal = infoFiscal;
-        infoFiscal.setPersona(this);
     }
-
-    public List<Compra> getCompras() { return compras; }
 }

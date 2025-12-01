@@ -7,38 +7,43 @@ import jakarta.persistence.*;
 public class InfoFiscal {
 
     @Id
-    @Column(name = "persona_id")
-    private Integer id;
+    @Column(name = "nifcif", length = 10)
+    private String nifcif;
 
-    private String nifCif;
-    private String calle;
+    @Column(nullable = false)
+    private String dni;
+
+    @Column(nullable = false)
+    private String direccion;
+
     private String ciudad;
-    private String codigoPostal;
-    private String telefono;
+    private String provincia;
+    private String cp;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "persona_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nifcif")
     private Persona persona;
 
-    // GETTERS & SETTERS
+    public InfoFiscal() {}
 
-    public Integer getId() { return id; }
+    // GETTERS Y SETTERS
+    public String getNifcif() { return nifcif; }
+    public void setNifcif(String nifcif) { this.nifcif = nifcif; }
 
-    public String getNifCif() { return nifCif; }
-    public void setNifCif(String nifCif) { this.nifCif = nifCif; }
+    public String getDni() { return dni; }
+    public void setDni(String dni) { this.dni = dni; }
 
-    public String getCalle() { return calle; }
-    public void setCalle(String calle) { this.calle = calle; }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
     public String getCiudad() { return ciudad; }
     public void setCiudad(String ciudad) { this.ciudad = ciudad; }
 
-    public String getCodigoPostal() { return codigoPostal; }
-    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
+    public String getProvincia() { return provincia; }
+    public void setProvincia(String provincia) { this.provincia = provincia; }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public String getCp() { return cp; }
+    public void setCp(String cp) { this.cp = cp; }
 
     public Persona getPersona() { return persona; }
     public void setPersona(Persona persona) { this.persona = persona; }

@@ -1,7 +1,7 @@
 package com.my_shop.myShop;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,37 +11,34 @@ public class Compra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
-    @Enumerated(EnumType.STRING)
-    private EstadoCompra estado;
+    @Column(name = "importe_total", nullable = false)
+    private double importeTotal;
 
-    private String direccionEnvio;
-
+    // N:1 con Persona
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "persona_id")
+    @JoinColumn(name = "escritor")
     private Persona persona;
 
-    @OneToMany(mappedBy = "compra", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<DetalleCompra> detalles = new ArrayList<>();
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LineaCompra> lineas = new ArrayList<>();
 
-    // GETTERS & SETTERS
+    public Compra() {}
 
-    public Integer getId() { return id; }
+    public int getId() { return id; }
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
-    public EstadoCompra getEstado() { return estado; }
-    public void setEstado(EstadoCompra estado) { this.estado = estado; }
-
-    public String getDireccionEnvio() { return direccionEnvio; }
-    public void setDireccionEnvio(String direccionEnvio) { this.direccionEnvio = direccionEnvio; }
+    public double getImporteTotal() { return importeTotal; }
+    public void setImporteTotal(double importeTotal) { this.importeTotal = importeTotal; }
 
     public Persona getPersona() { return persona; }
     public void setPersona(Persona persona) { this.persona = persona; }
 
-    public List<DetalleCompra> getDetalles() { return detalles; }
+    public List<LineaCompra> getLineas() { return lineas; }
+    public void setLineas(List<LineaCompra> lineas) { this.lineas = lineas; }
 }
