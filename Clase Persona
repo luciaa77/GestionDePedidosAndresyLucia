@@ -1,0 +1,153 @@
+Clase persona: 
+
+package com.my_shop.myShop;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "persona")
+public class Persona {
+	/**
+	 * @author Andrés Muñoz y Lucia Cuadrado
+	 * @version 1.0 
+	 * @since
+	 * Creamos el objeto Persona
+	 */
+    @Id
+    @Column(name = "nifcif", length = 10)
+    private String nifcif;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    private String telefono;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "fecha_registro", nullable = false)
+    private LocalDate fechaRegistro;
+
+    // Relación 1:1 con info_fiscal
+    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private InfoFiscal infoFiscal;
+
+    public Persona() {}
+
+    // GETTERS Y SETTERS
+    public String getNifcif() { return nifcif; }
+    public void setNifcif(String nifcif) { this.nifcif = nifcif; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public LocalDate getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDate fechaRegistro) { this.fechaRegistro = fechaRegistro; }
+
+    public InfoFiscal getInfoFiscal() { return infoFiscal; }
+    public void setInfoFiscal(InfoFiscal infoFiscal) {
+        this.infoFiscal = infoFiscal;
+    }
+}
+
+
+
+Clase Articulo:
+
+package com.my_shop.myShop;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "articulo")
+public class Articulo {
+	/**
+	 * @author Andrés Muñoz y Lucia Cuadrado
+	 * @version 1.0 
+	 * @since
+	 * Creamos el objeto articulo
+	 */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(name = "precio_base", nullable = false)
+    private double precioBase;
+
+    private String descripcion;
+
+    public Articulo() {}
+
+    // GETTERS Y SETTERS
+    public int getId() { return id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public double getPrecioBase() { return precioBase; }
+    public void setPrecioBase(double precioBase) { this.precioBase = precioBase; }
+
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+}
+
+
+Clase Compra: package com.my_shop.myShop;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "compra")
+public class Compra {
+	/**
+	 * @author Andrés Muñoz y Lucia Cuadrado
+	 * @version 1.0 
+	 * @since
+	 * Creamos el objeto compra
+	 */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private LocalDateTime fecha;
+
+    @Column(name = "importe_total", nullable = false)
+    private double importeTotal;
+
+    // N:1 con Persona
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "escritor")
+    private Persona persona;
+
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LineaCompra> lineas = new ArrayList<>();
+
+    public Compra() {}
+
+    public int getId() { return id; }
+
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
+
+    public double getImporteTotal() { return importeTotal; }
+    public void setImporteTotal(double importeTotal) { this.importeTotal = importeTotal; }
+
+    public Persona getPersona() { return persona; }
+    public void setPersona(Persona persona) { this.persona = persona; }
+
+    public List<LineaCompra> getLineas() { return lineas; }
+    public void setLineas(List<LineaCompra> lineas) { this.lineas = lineas; }
+}
